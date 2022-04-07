@@ -1,2 +1,2 @@
 # Modelleren1-A
-Hoi, wat leuk dat je dit leest
+In deze GitHub-repository vind je de modellen gebruikt voor de numerieke methode in het verslag.
