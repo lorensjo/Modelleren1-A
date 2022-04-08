@@ -1,0 +1,68 @@
+"""
+-- Model 4 --
+
+Program      : Equilibriumpunt
+Author       : Lucas & Lorenzo
+Created      : April 7, 2022
+"""
+import matplotlib.pyplot as plt
+
+
+def func(I_init, S_init, R_init, D_init):
+    ρ = 1/7
+    δ = 0.23/100
+    σ = 1/183
+    
+    t_init = 0
+    t_end = 1000             # De simulatie loopt tot 100 dagen na het begin
+    Dt = 1/100                # Tijdstap van 1/1000 dag
+    nsteps = int(round((t_end-t_init)/Dt)) # Totaal aantal tijdstappen
+    
+    Rw = 1.93            # Het reproductiegetal; aantal mensen dat iemand gemiddeld besmet
+    
+    
+    t_lst = [t_init] + [0] * nsteps
+    I_lst = [I_init] + [0] * nsteps
+    S_lst = [S_init] + [0] * nsteps
+    R_lst = [R_init] + [0] * nsteps
+    D_lst = [D_init] + [0] * nsteps
+    
+    for i in range(1, nsteps+1):        # Eulers methode  
+        t = t_lst[i-1]
+        I = I_lst[i-1]
+        S = S_lst[i-1]
+        R = R_lst[i-1]
+        D = D_lst[i-1]
+        N = S + I + R  # levende bevolking
+    
+        dIdt =  Rw/7 * I*S/N - ρ * I    # De verandering in het aantal besmette mensen
+        dSdt = -Rw/7 * I*S/N + σ* R # De verandering in het aantal vatbare mensen
+        dRdt = ρ * I * (1-δ)     - σ * R
+        DDdt = δ * ρ * I
+        
+        t_lst[i] = t + Dt
+        I_lst[i] = I + dIdt * Dt
+        S_lst[i] = S + dSdt * Dt
+        R_lst[i] = R + dRdt * Dt
+        D_lst[i] = D + DDdt * Dt
+        
+    return R_lst, S_lst
+# Het maken van een grafiek:
+f = plt.figure(dpi=1500)
+
+style = ["-", "--", "-.", ":","--"]
+for j, I_init in enumerate([800, 1*10**6, 5*10**6, 7*10**6, 16*10**6]):
+    N = 17600000
+    S_init = N-I_init      # Het aantal vatbare personen op t = 0
+    R_init = 0   
+    D_init = 0   
+    R_lst, S_lst = func(I_init, S_init, R_init, D_init)
+    plt.plot(R_lst, S_lst, style[j])
+
+
+plt.grid(True)
+plt.legend(["I(0) = 800", "I(0) = 1*10^6", "I(0) = 5*10^6", "I(0) = 7*10^6", "I(0) = 16*10^6"])
+plt.xlabel('Aantal immuun (R)')
+plt.ylabel('Aantal vatbaar (S)')
+plt.title('Vergelijking van aantal S en R')
+plt.show()
