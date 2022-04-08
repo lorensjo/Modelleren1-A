@@ -1,9 +1,9 @@
 """
 -- SIRD-model --
 
-Program      : SIR-model
+Program      : SIRD-model met deïmmunisatie
 Author       : Lucas & Lorenzo
-Created      : March 2, 2022
+Created      : April 7, 2022
 """
 
 import numpy as np
@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 N = 17600000                 # De bevolkingsgrootte
 I_init = 800                 # Het aantal besmette personen op t = 0
-S_init = N - I_init        # Het aantal vatbare personen op t = 0
+S_init = N - I_init         # Het aantal vatbare personen op t = 0
 R_init = 0
 D_init = 0
 
