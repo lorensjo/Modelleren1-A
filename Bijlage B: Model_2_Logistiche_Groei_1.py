@@ -1,7 +1,7 @@
 """
--- Model 2 --
+-- Model 2: Logistische Groei --
 
-Program      : Exponential growth with R-value
+Program      : Logistische Groei
 Author       : Lucas & Lorenzo
 Created      : March 2, 2022
 """
