@@ -1,7 +1,7 @@
 """
 -- Model 2: Logistische Groei --
 
-Program      : Logistische Groei
+Program      : Logistische Groei met vatbaarheid
 Author       : Lucas & Lorenzo
 Created      : March 2, 2022
 """
