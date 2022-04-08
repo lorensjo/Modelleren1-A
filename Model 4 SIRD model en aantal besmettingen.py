@@ -1,0 +1,70 @@
+"""
+-- SIRD-model --
+
+Program      : SIR-model
+Author       : Lucas & Lorenzo
+Created      : March 2, 2022
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 17600000                 # De bevolkingsgrootte
+I_init = 800                 # Het aantal besmette personen op t = 0
+S_init = N - I_init        # Het aantal vatbare personen op t = 0
+R_init = 0
+D_init = 0
+
+t_init = 0
+t_end = 800                # De simulatie loopt tot 100 dagen na het begin
+Dt = 1/1000                # Tijdstap van 1/1000 dag
+nsteps = int(round((t_end-t_init)/Dt)) # Totaal aantal tijdstappen
+
+Rw = 1.93    # Het reproductiegetal; aantal mensen dat iemand gemiddeld besmet
+ρ = 1/7      # Herstelfactor
+δ = 0.23/100 # Overlijdensfactor
+φ = 1/183    # Vatbaarheidsfactor
+
+t_lst = [t_init] + [0] * nsteps
+I_lst = [I_init] + [0] * nsteps
+S_lst = [S_init] + [0] * nsteps
+R_lst = [R_init] + [0] * nsteps
+D_lst = [D_init] + [0] * nsteps
+B_lst = [0] * (t_end - t_init + 1)
+
+for i in range(1, nsteps+1):        # Eulers methode
+    t = t_lst[i-1]
+    I = I_lst[i-1]
+    S = S_lst[i-1]
+    R = R_lst[i-1]
+    D = D_lst[i-1]
+    N = S + I + R
+    
+    B = Rw/7 * I*(1-(I+R)/N) * Dt
+    dIdt = Rw/7 * I*(1-(I+R)/N) - ρ * I   # De verandering in het aantal besmette mensen
+    dSdt = -Rw/7 * I*S/N + φ * R  # De verandering in het aantal vatbare mensen
+    dRdt = (1-δ) * ρ * I - φ * R      # De verandering in het aantal immune mensen
+    dDdt = δ * ρ * I                  # De verandering in het aantal overleden mensen
+    
+    t_lst[i] = t + Dt
+    I_lst[i] = I + dIdt * Dt
+    S_lst[i] = S + dSdt * Dt
+    R_lst[i] = R + dRdt * Dt
+    D_lst[i] = D + dDdt * Dt
+    B_lst[int(i*Dt)] += B
+    
+for i, elt in enumerate(B_lst):
+    B_lst[i] = round(elt)
+# Het maken van een grafiek:
+plt.figure(dpi=150)
+plt.plot(t_lst, S_lst, 'b--') #De grafiek van het model
+plt.plot(t_lst, I_lst, 'g-')  #De grafiek van het model
+plt.plot(t_lst, R_lst, 'y:')  #De grafiek van het model
+y_pos = np.arange(len(B_lst))
+plt.plot(y_pos[:-1], B_lst[:-1]) #De grafiek van het aantal besmettingen
+plt.grid(True)
+plt.legend(["Besmettingen (B)"]) #De legenda horend bij de grafiek van het aantal besmettingen
+plt.xlabel('Tijd (dagen)')
+plt.ylabel('Aantal mensen')
+plt.title('Aantal covid-19-besmettingen per dag')
+plt.show()
