@@ -1,15 +1,15 @@
 """
--- Model 4 --
+-- Model 4 Deïmmunisate--
 
-Program      : Exponential growth with R-value
+Program      : SIRD-model met deïmmunisatie
 Author       : Lucas & Lorenzo
 Created      : April 6, 2022
 """
 import matplotlib.pyplot as plt
 
 #N = 1000                   # De bevolkingsgrootte
-I_init = 1                # Het aantal besmette personen op t = 0
-S_init = 999      # Het aantal vatbare personen op t = 0
+I_init = 1                 # Het aantal besmette personen op t = 0
+S_init = 999               # Het aantal vatbare personen op t = 0
 R_init = 0   
 D_init = 0   
 
@@ -40,7 +40,7 @@ for i in range(1, nsteps+1):        # Eulers methode
     N = S + I + R  # levende bevolking
 
     dIdt =  Rw/7 * I*S/N - ρ * I    # De verandering in het aantal besmette mensen
-    dSdt = -Rw/7 * I*S/N + σ* R # De verandering in het aantal vatbare mensen
+    dSdt = -Rw/7 * I*S/N + σ* R     # De verandering in het aantal vatbare mensen
     dRdt = ρ * I * (1-δ)     - σ * R
     DDdt = δ * ρ * I
     
