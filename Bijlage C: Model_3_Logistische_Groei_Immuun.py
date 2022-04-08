@@ -1,7 +1,7 @@
 """
--- Model 2 --
+-- Model 3 Logistische Groei --
 
-Program      : Exponential growth with R-value
+Program      : Logistische Groei met immuniteit en sterfte
 Author       : Lucas & Lorenzo
 Created      : March 2, 2022
 """
