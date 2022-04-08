@@ -61,10 +61,10 @@ plt.plot(t_lst, S_lst, 'b--') #De grafiek van het model
 plt.plot(t_lst, I_lst, 'g-')  #De grafiek van het model
 plt.plot(t_lst, R_lst, 'y:')  #De grafiek van het model
 y_pos = np.arange(len(B_lst))
-plt.plot(y_pos[:-1], B_lst[:-1]) #De grafiek van het aantal besmettingen
+#plt.plot(y_pos[:-1], B_lst[:-1]) #De grafiek van het aantal besmettingen
 plt.grid(True)
-plt.legend(["Besmettingen (B)"]) #De legenda horend bij de grafiek van het aantal besmettingen
+plt.legend(["Vatbaar (S)", "Geïnfecteerd (I)", "Immuun (R)"]) #De legenda horend bij de grafiek van het aantal besmettingen
 plt.xlabel('Tijd (dagen)')
 plt.ylabel('Aantal mensen')
-plt.title('Aantal covid-19-besmettingen per dag')
+plt.title('Aantal COVID-19-besmettingen per dag')
 plt.show()
